@@ -5,6 +5,7 @@ KNOWLEDGE_BASE_ID = "m-ric/huggingface_doc"
 CHUNK_SIZE = 512
 CHUNK_OVERLAP = 48
 TOP_K = 5
+
 MARKDOWN_SEPARATORS = [
     "\n#{1,6} ",
     "```\n",

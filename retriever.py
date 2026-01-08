@@ -13,7 +13,7 @@ def get_retriever(documents, chunk_size, chunk_overlap):
         chunk_overlap=chunk_overlap,
         add_start_index=True,
         strip_whitespace=True,
-        separators=MARKDOWN_SEPARATORS # Defined in config or locally
+        separators=MARKDOWN_SEPARATORS
     )
     
     print("Splitting documents...")
