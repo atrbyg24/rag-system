@@ -1,5 +1,5 @@
 import torch
-from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 from langchain_huggingface import HuggingFacePipeline 
 from config import READER_MODEL_NAME
 
