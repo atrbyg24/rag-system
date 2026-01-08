@@ -1,5 +1,5 @@
 import datasets
-from langchain.docstore.document import Document as LangchainDocument
+from langchain_core.documents import Document as LangchainDocument
 from tqdm import tqdm
 from config import KNOWLEDGE_BASE_ID
 
