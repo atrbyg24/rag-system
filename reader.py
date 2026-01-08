@@ -1,30 +1,21 @@
 import torch
-from transformers import pipeline, AutoTokenizer, BitsAndBytesConfig
+from transformers import pipeline, AutoTokenizer
 from langchain_huggingface import HuggingFacePipeline 
 from config import READER_MODEL_NAME
 
 def get_reader_pipeline():
     tokenizer = AutoTokenizer.from_pretrained(READER_MODEL_NAME)
-    
-    quantization_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_quant_type="nf4",         
-        bnb_4bit_use_double_quant=True 
-    )
 
     hf_pipe = pipeline(
-        model=READER_MODEL_NAME,
-        tokenizer=tokenizer,
-        task="text-generation",
-        device_map="auto",
-        trust_remote_code=True,
-        model_kwargs={
-            "quantization_config": quantization_config
-        },
-        temperature=0.2,
-        max_new_tokens=500,
-    )
+            model=READER_MODEL_NAME,
+            tokenizer=tokenizer,
+            task="text-generation",
+            device_map="auto",
+            torch_dtype=torch.float16, 
+            trust_remote_code=True,
+            temperature=0.2,
+            max_new_tokens=500,
+        )
     
     langchain_llm = HuggingFacePipeline(pipeline=hf_pipe)
     
