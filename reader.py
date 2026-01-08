@@ -21,12 +21,33 @@ def get_reader_pipeline():
     
     return langchain_llm, tokenizer
 
-RAG_SYSTEM_PROMPT = "Use the context to answer the question concisely."
-RAG_USER_PROMPT_TEMPLATE = "Context:\n{context}\n---\nQuestion: {question}"
-
 def format_prompt(question, context, tokenizer):
-    prompt_chat = [
-        {"role": "system", "content": RAG_SYSTEM_PROMPT},
-        {"role": "user", "content": RAG_USER_PROMPT_TEMPLATE.format(context=context, question=question)}
+    """
+    Formats the query using the model's native chat template 
+    and the user-provided system instructions.
+    """
+    prompt_in_chat_format = [
+        {
+            "role": "system",
+            "content": """Using the information contained in the context,
+give a comprehensive answer to the question.
+Respond only to the question asked, response should be concise and relevant to the question.
+Provide the number of the source document when relevant.
+If the answer cannot be deduced from the context, do not give an answer.""",
+        },
+        {
+            "role": "user",
+            "content": f"""Context:
+{context}
+---
+Now here is the question you need to answer.
+
+Question: {question}""",
+        },
     ]
-    return tokenizer.apply_chat_template(prompt_chat, tokenize=False, add_generation_prompt=True)
+    
+    return tokenizer.apply_chat_template(
+        prompt_in_chat_format, 
+        tokenize=False, 
+        add_generation_prompt=True
+    )
