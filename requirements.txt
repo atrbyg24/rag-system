@@ -16,4 +16,4 @@ tqdm>=4.66.0
 matplotlib>=3.7.0
 openpyxl>=3.1.0
 
-ragas>=0.1.7       
+ragas>=0.1.7 
