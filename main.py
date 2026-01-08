@@ -10,7 +10,7 @@ def run_rag_query(query, vector_db, reader_llm, tokenizer):
     context = "\n".join([f"Document {i}:\n{d.page_content}" for i, d in enumerate(retrieved_docs)])
     
     final_prompt = format_prompt(query, context, tokenizer)
-    answer = reader_llm(final_prompt)[0]["generated_text"]
+    answer = reader_llm.invoke(final_prompt)
     
     return answer, retrieved_docs
 
