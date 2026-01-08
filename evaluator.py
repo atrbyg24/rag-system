@@ -14,10 +14,13 @@ def get_local_judge():
         pipeline_kwargs={
             "max_new_tokens": 512, 
             "do_sample": False,
-            "repetition_penalty": 1.1
+            "repetition_penalty": 1.1,
+            "torch_dtype": torch.float16,
+            "trust_remote_code": True
         },
-        device_map="auto"
+        device_map="auto" 
     )
+    
     embeddings = HuggingFaceEmbeddings(model_name=config.EVAL_EMBED_MODEL)
     
     return LangchainLLMWrapper(llm), LangchainEmbeddingsWrapper(embeddings)
