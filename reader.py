@@ -7,15 +7,20 @@ def get_reader_pipeline():
     tokenizer = AutoTokenizer.from_pretrained(READER_MODEL_NAME)
 
     hf_pipe = pipeline(
-            model=READER_MODEL_NAME,
-            tokenizer=tokenizer,
-            task="text-generation",
-            device_map="auto",
-            torch_dtype=torch.float16, 
-            trust_remote_code=True,
-            temperature=0.2,
-            max_new_tokens=500,
-        )
+        model=READER_MODEL_NAME,
+        tokenizer=tokenizer,
+        task="text-generation",
+        device_map="auto",
+        trust_remote_code=True,
+        pipeline_kwargs={
+            "dtype": torch.float16,
+            "do_sample": False,
+            "temperature": None,
+            "top_p": None,
+            "max_new_tokens": 500,
+            "repetition_penalty": 1.1
+        }
+    )
     
     langchain_llm = HuggingFacePipeline(pipeline=hf_pipe)
     
